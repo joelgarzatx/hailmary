@@ -2,4 +2,26 @@ extends layout
 
 block content
   h1 Profile Board
+  div.grid
+    div.grid-sizer
+      each val, index in profiles
+        div.grid-item
+          - var url = 'https://twitter.com/' + val.url +'/profile_image?size=original'
+          img(src='#{url}' alt='#{val.name}')
   
+  script.
+    // external js: masonry.pkgd.js, imagesloaded.pkgd.js
+
+    // init Isotope
+    var grid = document.querySelector('.grid');
+
+    var msnry = new Masonry( grid, {
+      itemSelector: '.grid-item',
+      columnWidth: '.grid-sizer',
+      percentPosition: true
+    });
+  
+    imagesLoaded( grid ).on( 'progress', function() {
+      // layout Masonry after each image loads
+      msnry.layout();
+    });

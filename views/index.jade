@@ -1,12 +1,32 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  
-  p Recently added: #{user}
-
-  div.namebox
-      form(name="add", action="/add", method="post")
-        input(type="text", name="user")
-        input(type="submit", value="submit")
+  div.container
+    div.row
+      div.col-lg-12
+        div.jumbotron
+          h1 Social Event Board
+          p This is a simple event board to display Twitter avatars during events.
+          div.row
+            div.col-lg-12          
+              form.form-horizontal(name='add', action='/add', method='post')
+                fieldset
+                  div.form-group
+                    label.col-lg-2.control-label(for='inputEmail') Email
+                    div.col-lg-10
+                      input#inputEmail.form-control(type='text', name='inputEmail', placeholder='twitter handle')
+                  div.form-group
+                    div.col-lg-10.col-lg-offset-2
+                      button.btn.btn-primary.btn-lg(type='submit') Add Profile  
+                  div.form-group
+                    div.col-lg-10.col-lg-offset-2        
+                      a.btn.btn-info.btn-lg(href='./board') View Board
+          
+          
+                div.alert.alert-dismissible.alert-warning
+                  button.close(type='button', data-dismiss='alert') 
+                  h4 Recently Added:
+                  p
+                    | #{user}
+                    | 
+                    
