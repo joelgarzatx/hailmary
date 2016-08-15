@@ -6,12 +6,20 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/hailmary');
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var add = require('./routes/add');
 var board = require('./routes/board');
+
+var db_name = "profiles";
+
+mongodb_connection_string = 'mongodb://127.0.0.1:27017/' + db_name;
+if (process.env.OPENSHIFT_MONGDB_DB_URL) {
+  mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + db_name;
+}
+mongoose.connect(mongodb_connection_string);
 
 var app = express();
 
@@ -23,7 +31,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false })); 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
